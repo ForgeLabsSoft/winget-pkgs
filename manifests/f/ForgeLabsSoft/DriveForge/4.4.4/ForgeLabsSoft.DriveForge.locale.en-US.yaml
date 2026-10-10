@@ -1,0 +1,60 @@
+# Created using wingetcreate 1.12.13.0
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.12.0.schema.json
+
+PackageIdentifier: ForgeLabsSoft.DriveForge
+PackageVersion: 4.4.4
+PackageLocale: en-US
+Publisher: ForgeLabsSoft
+PublisherUrl: https://github.com/ForgeLabsSoft
+PublisherSupportUrl: https://github.com/ForgeLabsSoft/driveforge/issues
+PackageName: DriveForge
+PackageUrl: https://github.com/ForgeLabsSoft/driveforge
+License: GPL-3.0-only
+LicenseUrl: https://github.com/ForgeLabsSoft/driveforge/blob/main/LICENSE.txt
+Copyright: Copyright (C) 2026 ForgeLabsSoft
+ShortDescription: Create Windows USB drives, clone your PC, back it up, recover deleted files, and check drive health. Free and open source.
+Description: |-
+  DriveForge makes common but normally-complicated Windows disk tasks simple and safe:
+  create bootable Windows or Linux USB drives, clone a running PC to another drive,
+  back up and restore Windows to an image, recover deleted files, securely erase drives,
+  and diagnose drive health. It is a single self-contained executable with no ads,
+  no telemetry, and no accounts. Free and open source under the GPL-3.0.
+Moniker: driveforge
+Tags:
+- usb
+- bootable
+- iso
+- clone
+- backup
+- data-recovery
+- undelete
+- secure-erase
+- wipe
+- disk
+- diagnostics
+- ventoy
+- rescue
+- portable
+- open-source
+ReleaseNotes: |-
+  Fixed: the same fault behind 4.4.3 was still in four more places, and one of them was the tool for
+  recovering from it.
+
+  Quick partition, Convert MBR/GPT and "Initialize a blank / RAW disk" all emptied the disk and then asked
+  Windows to convert a partition table that no longer existed, which fails on Windows 11 26H2 and leaves the
+  drive blank. Quick format had the quiet version of it: it created a partition without asking for a table at
+  all, and Windows then makes an MBR one, so a 4 TB drive came back as a 2 TB volume and the operation
+  reported success.
+
+  All four now create the partition table with the call meant for a blank disk and check that they got it.
+  Two build-breaking rules were added so the pattern cannot return, and both were confirmed by deliberately
+  breaking the code.
+
+  Verified on real hardware as well as in tests, including driving the application itself through the repair
+  on a USB-attached SSD, in both directions.
+ReleaseNotesUrl: https://github.com/ForgeLabsSoft/driveforge/releases/tag/v4.4.4
+Documentations:
+- DocumentLabel: Wiki
+  DocumentUrl: https://github.com/ForgeLabsSoft/driveforge/wiki
+ManifestType: defaultLocale
+ManifestVersion: 1.12.0
